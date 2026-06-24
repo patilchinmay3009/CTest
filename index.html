@@ -2,146 +2,53 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>LifeOS</title>
-
-  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fake Login</title>
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
+<body class="bg-slate-900 flex items-center justify-center min-h-screen">
 
-<body class="bg-slate-100 min-h-screen p-6">
+<!-- Login Screen -->
+<div id="loginPage" class="bg-slate-800 p-8 rounded-2xl shadow-xl w-80">
+    <h1 class="text-2xl font-bold text-white text-center mb-6">Login</h1>
 
-  <div class="max-w-3xl mx-auto">
+    <input
+        type="password"
+        id="password"
+        placeholder="Enter Password"
+        class="w-full p-3 rounded-lg bg-slate-700 text-white outline-none mb-4"
+    >
 
-    <h1 class="text-4xl font-bold text-center mb-8">
-      🚀 LifeOS
-    </h1>
+    <button
+        onclick="login()"
+        class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold"
+    >
+        Unlock
+    </button>
 
-    <div class="bg-white rounded-2xl shadow p-6 space-y-4">
+    <p id="error" class="text-red-400 text-center mt-3 hidden">
+        Wrong Password
+    </p>
+</div>
 
-      <div>
-        <label class="font-semibold">Mood (1-10)</label>
-        <input id="mood"
-          type="number"
-          min="1"
-          max="10"
-          class="w-full border rounded-lg p-2 mt-1">
-      </div>
-
-      <div>
-        <label class="font-semibold">Sleep Hours</label>
-        <input id="sleep"
-          type="number"
-          class="w-full border rounded-lg p-2 mt-1">
-      </div>
-
-      <div>
-        <label class="font-semibold">Weight (kg)</label>
-        <input id="weight"
-          type="number"
-          class="w-full border rounded-lg p-2 mt-1">
-      </div>
-
-      <div class="grid grid-cols-2 gap-4">
-
-        <label class="flex items-center gap-2">
-          <input id="startup" type="checkbox">
-          Startup Done
-        </label>
-
-        <label class="flex items-center gap-2">
-          <input id="cricket" type="checkbox">
-          Cricket Done
-        </label>
-
-        <label class="flex items-center gap-2">
-          <input id="calories" type="checkbox">
-          Extra Calories Taken
-        </label>
-
-        <label class="flex items-center gap-2">
-          <input id="plan" type="checkbox">
-          Followed My Plan
-        </label>
-
-      </div>
-
-      <div>
-        <label class="font-semibold">Today's Win</label>
-        <textarea id="win"
-          class="w-full border rounded-lg p-2 mt-1"></textarea>
-      </div>
-
-      <div>
-        <label class="font-semibold">Thing I Avoided</label>
-        <textarea id="avoid"
-          class="w-full border rounded-lg p-2 mt-1"></textarea>
-      </div>
-
-      <button
-        onclick="saveData()"
-        class="bg-blue-600 text-white px-5 py-3 rounded-xl hover:bg-blue-700">
-        Save Today
-      </button>
-
-    </div>
-
-    <div class="bg-white rounded-2xl shadow p-6 mt-6">
-      <h2 class="text-2xl font-bold mb-4">
-        📊 Last Saved Entry
-      </h2>
-
-      <pre id="output"
-        class="whitespace-pre-wrap text-sm"></pre>
-    </div>
-
-  </div>
+<!-- Protected Page -->
+<div id="homePage" class="hidden text-center">
+    <h1 class="text-5xl font-bold text-white">Hello World</h1>
+</div>
 
 <script>
+function login() {
+    const password = document.getElementById("password").value;
 
-function saveData() {
-
-  const data = {
-    date: new Date().toLocaleDateString(),
-
-    mood: document.getElementById("mood").value,
-    sleep: document.getElementById("sleep").value,
-    weight: document.getElementById("weight").value,
-
-    startup: document.getElementById("startup").checked,
-    cricket: document.getElementById("cricket").checked,
-    calories: document.getElementById("calories").checked,
-    plan: document.getElementById("plan").checked,
-
-    win: document.getElementById("win").value,
-    avoid: document.getElementById("avoid").value
-  };
-
-  localStorage.setItem(
-    "lifeos",
-    JSON.stringify(data)
-  );
-
-  showData();
+    // Fake password
+    if (password === "1234") {
+        document.getElementById("loginPage").classList.add("hidden");
+        document.getElementById("homePage").classList.remove("hidden");
+    } else {
+        document.getElementById("error").classList.remove("hidden");
+    }
 }
-
-function showData() {
-
-  const saved =
-    localStorage.getItem("lifeos");
-
-  if (!saved) return;
-
-  const data =
-    JSON.parse(saved);
-
-  document.getElementById("output")
-    .innerText =
-      JSON.stringify(data, null, 2);
-}
-
-showData();
-
 </script>
 
 </body>
